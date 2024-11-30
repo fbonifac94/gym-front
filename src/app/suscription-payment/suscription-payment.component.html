@@ -1,0 +1,75 @@
+<mat-dialog-content class="dialog-content">
+  <div class="loading-overlay" *ngIf="dataSource.isLoading$ | async">
+    <div class="overlay-content">
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>
+
+  <h5>Suscripción</h5>
+
+  <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <mat-form-field appearance="fill">
+        <mat-label>Cantidad</mat-label>
+        <input matInput type="number" formControlName="amount" required />
+        <mat-error *ngIf="amountFormControl.invalid">{{ getErrorMessage('amount') }}</mat-error>
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>Unidad de Tiempo</mat-label>
+        <mat-select formControlName="timeUnit">
+          <mat-option *ngFor="let unit of timeUnits" [value]="unit.value">
+            {{ unit.viewValue }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="timeUnitFormControl.invalid">{{ getErrorMessage('timeUnit') }}</mat-error>
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>Importe</mat-label>
+        <input matInput type="number" formControlName="paymentAmount" required />
+        <mat-error *ngIf="paymentAmountFormControl.invalid">{{ getErrorMessage('paymentAmount') }}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-dialog-actions>
+      <button mat-raised-button color="primary" class="add-payment-button" type="submit" [disabled]="paymentForm.invalid">Abonar</button>
+      <button mat-button color="primary" class="add-payment-button" (click)="onCancel()">Cancelar</button>
+    </mat-dialog-actions>
+  </form>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="paymentAmount">
+      <th mat-header-cell *matHeaderCellDef> Monto Pagado </th>
+      <td mat-cell *matCellDef="let payment"> {{ payment.amount | currency }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="timePaid">
+      <th mat-header-cell *matHeaderCellDef> Tiempo </th>
+      <td mat-cell *matCellDef="let payment"> {{ payment.quantity }} {{ payment.susucriptionQuantityTimeUnits | suscriptionTimeUnits }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="paymentDate">
+      <th mat-header-cell *matHeaderCellDef> Fecha de Pago </th>
+      <td mat-cell *matCellDef="let payment"> {{ payment.date | date : 'dd/MM/yyyy' }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let payment; let i = index">
+        <button *ngIf="i === 0" mat-icon-button color="warn" (click)="deletePayment(payment)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr class="no-data-row" *matNoDataRow>
+      <td colspan="7" class="no-data-cell">No se encontraron pagos realizados.</td>
+    </tr>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [length]="dataSource.totalElements" [pageSize]="5" showFirstLastButtons></mat-paginator>
+</mat-dialog-content>

@@ -1,0 +1,115 @@
+<div class="clientes-container">
+  <h2>Profesores</h2>
+
+  <div class="actions">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Número de documento</mat-label>
+      <input matInput [formControl]="documentFilterFormControl" />
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="primary"
+      class="add-teacher-button"
+      (click)="addTeacher()"
+    >
+      Agregar profesor
+    </button>
+  </div>
+
+  <div class="loading-overlay" *ngIf="dataSource.isLoading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+    class="mat-elevation-z8 custom-table"
+    [class.table-loading]="dataSource.isLoading$ | async"
+    matSortActive="email"
+    matSortDirection="asc"
+    matSortDisableClear
+  >
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+      <td mat-cell *matCellDef="let teacher">{{ teacher.user.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+      <td mat-cell *matCellDef="let teacher">
+        {{ teacher.user.person.firstName | titlecase }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido</th>
+      <td mat-cell *matCellDef="let teacher">
+        {{ teacher.user.person.lastName | titlecase }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="documentNumber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Documento</th>
+      <td mat-cell *matCellDef="let teacher">
+        {{
+          teacher.user.person.documentType +
+            ": " +
+            teacher.user.person.documetNumber
+        }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+      <td mat-cell *matCellDef="let admin">
+        {{ admin.user.status | userstatus }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let teacher">
+        <button
+          mat-icon-button
+          color="warn"
+          *ngIf="isSuscribed(teacher)"
+          (click)="unsuscribeTeacher(teacher)"
+          title="Deshabilitar"
+        >
+          <mat-icon>cancel</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          *ngIf="!isSuscribed(teacher)"
+          (click)="suscribeTeacher(teacher)"
+          title="Habilitar"
+        >
+          <mat-icon color="primary">check_circle</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="accent"
+          (click)="detail(teacher)"
+          title="Detalle"
+        >
+          <mat-icon>search</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr class="no-data-row" *matNoDataRow>
+      <td colspan="7" class="no-data-cell">No se encontraron profesores.</td>
+    </tr>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [length]="dataSource.totalElements"
+    [pageSize]="10"
+    showFirstLastButtons
+  ></mat-paginator>
+  <div style="height: 250px; display: block"></div>
+</div>

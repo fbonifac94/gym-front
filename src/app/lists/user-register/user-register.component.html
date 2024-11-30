@@ -1,0 +1,93 @@
+<div class="register-page-content">
+    <h2 class="register-title">Registro de {{this.userType}}</h2>
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="register-form">
+      
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" required />
+        <mat-error *ngIf="emailFormControl.invalid">{{ getErrorMessage('email') }}</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="firstName" required />
+        <mat-error *ngIf="firstNameFormControl.invalid">{{ getErrorMessage('firstName') }}</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Apellido</mat-label>
+        <input matInput formControlName="lastName" required />
+        <mat-error *ngIf="lastNameFormControl.invalid">{{ getErrorMessage('lastName') }}</mat-error>
+      </mat-form-field>
+  
+      
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="phone" type="tel" required />
+        <mat-error *ngIf="phoneFormControl.invalid">{{ getErrorMessage('phone') }}</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Fecha de Nacimiento</mat-label>
+        <input matInput formControlName="bornDate" [matDatepicker]="picker" required/>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="bornDateFormControl.invalid">{{ getErrorMessage('bornDate') }}</mat-error>
+      </mat-form-field>
+  
+      
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>País</mat-label>
+        <input matInput formControlName="country" required />
+        <mat-error *ngIf="countryFormControl.invalid">{{ getErrorMessage('country') }}</mat-error>
+      </mat-form-field>
+  
+      
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Ciudad</mat-label>
+        <input matInput formControlName="city" required />
+        <mat-error *ngIf="cityFormControl.invalid">{{ getErrorMessage('city') }}</mat-error>
+      </mat-form-field>
+  
+      
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Barrio</mat-label>
+        <input matInput formControlName="district" required />
+        <mat-error *ngIf="districtFormControl.invalid">{{ getErrorMessage('district') }}</mat-error>
+      </mat-form-field>
+  
+      
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Dirección</mat-label>
+        <input matInput formControlName="address" required />
+        <mat-error *ngIf="addressFormControl.invalid">{{ getErrorMessage('address') }}</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Tipo de Documento</mat-label>
+        <mat-select formControlName="documentType" required>
+          <mat-option *ngFor="let type of documentTypes" [value]="type">
+            {{ type }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="documentTypeFormControl.invalid">{{ getErrorMessage('documentType') }}</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Número de Documento</mat-label>
+        <input matInput formControlName="documentNumber" required />
+        <mat-error *ngIf="documentNumberFormControl.invalid">{{ getErrorMessage('documentNumber') }}</mat-error>
+      </mat-form-field>
+  
+      
+      <div class="register-actions">
+        <button mat-button class="cancel-btn" (click)="onCancel()">Cancelar</button>
+        <button mat-raised-button color="primary" [disabled]="!formGroup.valid">Registrar</button>
+      </div>
+    </form>
+
+    <div *ngIf="isLoading" class="overlay">
+      <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
+    </div>
+  </div>
+  

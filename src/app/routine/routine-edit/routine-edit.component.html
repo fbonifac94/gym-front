@@ -1,0 +1,73 @@
+<div class="routine-container">
+    <h2>{{ routine.title }}</h2>
+  
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let exerciseByExerciseType of exercisesGroupedByExerciseType$ | async">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="exercise-type-title">
+            {{ exerciseByExerciseType.exerciseType.name }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+  
+        <table mat-table [dataSource]="exerciseByExerciseType.routineExercises" class="routine-table mat-elevation-z8">
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let routineExercise">
+              <mat-checkbox [checked]="isInRoutine(routineExercise)" (change)="addRemoveToRoutine($event.checked, routineExercise)"></mat-checkbox>
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let routineExercise">{{ routineExercise.exercise.name }}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="repetitions">
+            <th mat-header-cell *matHeaderCellDef class="small-column">Repeticiones</th>
+            <td mat-cell *matCellDef="let routineExercise" class="small-column">
+              <input matInput type="number" (change)="refreshRoutineExercise(routineExercise)" [(ngModel)]="routineExercise.repetitions" min="1" [disabled]="!isInRoutine(routineExercise)" />
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="series">
+            <th mat-header-cell *matHeaderCellDef class="small-column">Series</th>
+            <td mat-cell *matCellDef="let routineExercise" class="small-column">
+              <input matInput type="number" (change)="refreshRoutineExercise(routineExercise)" [(ngModel)]="routineExercise.series" min="1" [disabled]="!isInRoutine(routineExercise)" />
+            </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="observations">
+            <th mat-header-cell *matHeaderCellDef>Observaciones</th>
+            <td mat-cell *matCellDef="let routineExercise">
+              <input matInput type="text" (change)="refreshRoutineExercise(routineExercise)" [(ngModel)]="routineExercise.aditionalInfo" [disabled]="!isInRoutine(routineExercise)" />
+            </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-expansion-panel>
+    </mat-accordion>
+  
+    <mat-form-field appearance="fill" class="observations-field">
+      <mat-label>Observaciones Generales</mat-label>
+      <textarea [(ngModel)]="routine.aditionalInfo" matInput [formControl]="aditionalInfoFormControl" placeholder="Escribe las observaciones generales de la rutina"></textarea>
+    </mat-form-field>
+
+    <div style="display: flex; align-items: center;">
+      <mat-error *ngIf="isRoutineFormIncomplete()" style="display: block; margin-left: auto; padding-right: 10px;">
+        Existen ejercicios sin repeticiones o series cargadas
+      </mat-error>
+    </div>
+  
+    <div class="actions">
+      <button class="btnWidth" mat-raised-button color="primary" (click)="cancel()">Cancelar</button>
+      <button class="btnWidth"  mat-raised-button color="primary" (click)="saveRoutine()" [disabled]="isAvailableToSaveRoutine()">Guardar Rutina</button>
+    </div>
+
+    <div *ngIf="isLoading" class="overlay">
+      <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
+  </div>
+  <div style="display: block; height: 250px;"></div>
+  </div>
+  

@@ -1,0 +1,64 @@
+<div class="clientes-container">
+    <h2>Clases</h2>
+
+    <div class="loading-overlay" *ngIf="(dataSource.isLoading$ | async) || isLoading">
+      <mat-spinner></mat-spinner>
+    </div>
+  
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 custom-table" [class.table-loading]="(dataSource.isLoading$| async) || isLoading" matSortActive="name" matSortDirection="asc" matSortDisableClear>
+      
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Clase</th>
+        <td mat-cell *matCellDef="let scheduledClasz">{{ scheduledClasz.clasz.name }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="initDateTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha y hora de inicio</th>
+        <td mat-cell *matCellDef="let scheduledClasz">{{ getAsDate(scheduledClasz.initDateTime) | date: 'dd/MM/yyyy HH:mm'  }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="endDateTime">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha y hora de fin</th>
+        <td mat-cell *matCellDef="let scheduledClasz">{{ getAsDate(scheduledClasz.endDateTime) | date: 'dd/MM/yyyy HH:mm'  }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="teacher">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Profesor</th>
+        <td mat-cell *matCellDef="let scheduledClasz">{{ scheduledClasz.teacher.user.person.lastName + ' ' + scheduledClasz.teacher.user.person.firstName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actualClassPersonsAmount">
+        <th mat-header-cell *matHeaderCellDef>Cupos restantes</th>
+        <td mat-cell *matCellDef="let scheduledClasz">{{ scheduledClasz.totalClassPersonsAmount - scheduledClasz.actualClassPersonsAmount }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let scheduledClasz">
+          <button mat-icon-button (click)="enrollToClass(scheduledClasz.id)" *ngIf="isCustomer && !isEnrolledToScheduledClass(scheduledClasz) &&  (scheduledClasz.actualClassPersonsAmount < scheduledClasz.totalClassPersonsAmount)"  title="Suscribirse">
+            <mat-icon class="mat-primary">check_circle</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="eraseInscriptionClass(scheduledClasz.id)" *ngIf="isCustomer && isEnrolledToScheduledClass(scheduledClasz)"  title="Dar de baja suscripción">
+            <mat-icon>cancel</mat-icon>
+          </button>
+          <button mat-icon-button (click)="seeInscriptions(scheduledClasz)" *ngIf="!isCustomer"  title="Ver personas inscriptas">
+            <mat-icon color="primary">search</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="cancelClass(scheduledClasz.id)" *ngIf="!isCustomer && (scheduledClasz.status == 'HA')"  title="Cancelar clase">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr class="no-data-row" *matNoDataRow>
+        <td colspan="5" class="no-data-cell">No se encontraron clases programadas.</td>
+      </tr>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  
+    <mat-paginator [length]="dataSource.totalElements" [pageSize]="10" showFirstLastButtons></mat-paginator>
+    <div style="height: 250px; display: block"></div>
+  </div>
+  

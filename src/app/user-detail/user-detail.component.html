@@ -1,0 +1,97 @@
+<div class="data-container">
+  <mat-card class="data-card">
+    <div class="loading-overlay" *ngIf="isLoading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <mat-card-title>Usuario</mat-card-title>
+    <mat-card-content>
+      <form class="user-form" [formGroup]="formGroup">
+        <div class="form-row">
+          <mat-form-field appearance="fill" class="form-field" class="{{this.isEditable ? 'notAllowed' : ''}}">
+            <mat-label class="{{this.isEditable ? 'notAllowed' : ''}}">Email</mat-label>
+            <input class="{{this.isEditable ? 'notAllowed' : ''}}" matInput formControlName="email" readonly/>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="firstName" />
+            <mat-error *ngIf="firstNameFormControl.invalid">{{ getErrorMessage('firstName') }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Apellido</mat-label>
+            <input matInput formControlName="lastName" />
+            <mat-error *ngIf="lastNameFormControl.invalid">{{ getErrorMessage('lastName') }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Teléfono</mat-label>
+            <input matInput formControlName="phone" />
+            <mat-error *ngIf="phoneFormControl.invalid">{{ getErrorMessage('phone') }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Fecha de Nacimiento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="bornDate"/>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="bornDateFormControl.invalid">{{ getErrorMessage('bornDate') }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>País</mat-label>
+            <input matInput formControlName="country" />
+            <mat-error *ngIf="countryFormControl.invalid">{{ getErrorMessage('country') }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Ciudad</mat-label>
+            <input matInput formControlName="city"/>
+            <mat-error *ngIf="cityFormControl.invalid">{{ getErrorMessage('city') }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Distrito</mat-label>
+            <input matInput formControlName="district"/>
+            <mat-error *ngIf="districtFormControl.invalid">{{ getErrorMessage('district') }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Dirección</mat-label>
+            <input matInput formControlName="address"/>
+            <mat-error *ngIf="addressFormControl.invalid">{{ getErrorMessage('address') }}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field appearance="fill" class="form-field" class="{{this.isEditable ? 'notAllowed' : ''}}">
+            <mat-label class="{{this.isEditable ? 'notAllowed' : ''}}">Tipo de Documento</mat-label>
+            <input class="{{this.isEditable ? 'notAllowed' : ''}}" matInput formControlName="documentType" readonly/>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="form-field"  class="{{this.isEditable ? 'notAllowed' : ''}}">
+            <mat-label class="{{this.isEditable ? 'notAllowed' : ''}}">Número de Documento</mat-label>
+            <input class="{{this.isEditable ? 'notAllowed' : ''}}" matInput formControlName="documentNumber"  readonly/>
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" (click)="enableEdit()" *ngIf="!isEditable && isUserAvailableToEdit">Editar</button>
+          <button mat-raised-button color="primary" (click)="saveUser()" *ngIf="isEditable && isUserAvailableToEdit">Guardar</button>
+          <button mat-raised-button color="primary" (click)="cancelEdit()" *ngIf="isEditable && isUserAvailableToEdit">Cancelar</button>
+          <button mat-raised-button color="primary" *ngIf="isUserAvailableToEdit" (click)="changePassword()">
+            Cambiar contraseña
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

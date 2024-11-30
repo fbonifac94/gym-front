@@ -1,0 +1,32 @@
+<mat-toolbar color="primary" class="header">
+ <span class="logoclick" (click)="navigateTo('')">
+  <div class="logo" >
+    <img src="assets/gym-logo.png" alt="Logo Gimnasio" />
+  </div>
+  <span class="title" >Pantheon Fitness</span>
+
+  <span class="spacer"></span>
+</span>
+
+  <nav>
+    <div *ngIf="isAuthenticated; else loggedOut">
+      <span class="spanbienvenido">Bienvenido {{ username | titlecase }}</span>      
+      <span class="customer" *ngIf="isCustomer">Su membresía vence: {{expirationDateMembership | date :'dd/MM/yyyy'}}</span>      
+      <button mat-icon-button style="width: 50px; height: 50px; font-size: 36px;" [matMenuTriggerFor]="menu">
+        <mat-icon style="width: 36px; height: 36px; font-size: 36px;">menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" style="width: 320px !important;">
+        <button mat-menu-item style="text-align: center; width: 250px;" *ngFor="let item of availableMenuItems" (click)="navigateTo(item.route)">
+          {{ item.label }}
+        </button>
+        <button mat-menu-item style="text-align: center; width: 250px;" (click)="logout()">
+          Cerrar sesión
+        </button>
+      </mat-menu>
+    </div>
+
+    <ng-template #loggedOut>
+      <button class="initsesionclassbutton" mat-button (click)="login()">Iniciar sesión</button>
+    </ng-template>
+  </nav>
+</mat-toolbar>

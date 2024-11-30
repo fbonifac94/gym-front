@@ -1,0 +1,85 @@
+<div class="clientes-container">
+    <h2>Clientes</h2>
+  
+    <div class="actions" *ngIf="isAdministrator">
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Número de documento</mat-label>
+        <input matInput [formControl]="documentFilterFormControl"/>
+      </mat-form-field>
+      <button mat-raised-button class="add-customer-button" color="primary" (click)="addCustomer()">
+        Agregar Cliente
+      </button>
+    </div>
+
+
+
+    <div class="loading-overlay" *ngIf="dataSource.isLoading$ | async">
+      <mat-spinner></mat-spinner>
+    </div>
+  
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 custom-table" [class.table-loading]="dataSource.isLoading$| async" matSortActive="email" matSortDirection="asc" matSortDisableClear>
+      
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+        <td mat-cell *matCellDef="let customer">{{ customer.user.email }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+        <td mat-cell *matCellDef="let customer">{{ customer.user.person.firstName | titlecase }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido</th>
+        <td mat-cell *matCellDef="let customer">{{ customer.user.person.lastName | titlecase }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="documentNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Documento</th>
+        <td mat-cell *matCellDef="let customer">{{ customer.user.person.documentType + ': ' + customer.user.person.documetNumber }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="expireDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Expiración de membresía</th>
+        <td mat-cell *matCellDef="let customer">{{ (customer.user.expireDate | date : 'dd/MM/yyyy') | suscriptionExpireDate }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+        <td mat-cell *matCellDef="let customer">{{ customer.user.status | userstatus }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let customer">
+          <button mat-icon-button color="warn" *ngIf="isAdministrator && (isSuscribed(customer) && isExpireDateAfterToday(customer))" (click)="unsuscribeCustomer(customer)" title="Deshabilitar">
+            <mat-icon>cancel</mat-icon>
+          </button>
+          <button mat-icon-button *ngIf="isAdministrator && (!isSuscribed(customer) && isExpireDateAfterToday(customer))" (click)="suscribeCustomer(customer)" title="Habilitar">
+            <mat-icon color="primary">check_circle</mat-icon>
+          </button>
+          <button mat-icon-button *ngIf="isAdministrator" (click)="detail(customer)" title="Detalle">
+            <mat-icon color="primary">search</mat-icon>
+          </button>
+          <button mat-icon-button *ngIf="isTeacher" (click)="seeRoutines(customer)" title="Ver rutinas">
+            <mat-icon color="primary">search</mat-icon>
+          </button>
+          <button mat-icon-button *ngIf="isAdministrator" (click)="postPayment(customer)" title="Pago de suscripción">
+            <mat-icon color="primary">payment</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr class="no-data-row" *matNoDataRow>
+        <td colspan="7" class="no-data-cell">No se encontraron clientes.</td>
+      </tr>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  
+    <mat-paginator [length]="dataSource.totalElements" [pageSize]="10" showFirstLastButtons></mat-paginator>
+    <div style="height: 250px; display: block"></div>
+
+  </div>
+  

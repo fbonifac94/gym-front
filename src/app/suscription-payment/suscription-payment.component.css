@@ -1,0 +1,134 @@
+.dialog-content {
+  width: 100%;
+  max-width: 600px;
+  background: white;
+}
+
+h5 {
+  margin-left: 165px !important;
+  margin-top: 20px !important;
+  margin-bottom: 30px !important;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+mat-form-field {
+  flex: 1 1 100%;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+mat-paginator {
+  margin-top: 10px;
+}
+
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.overlay-content {
+  pointer-events: all; 
+}
+
+.add-payment-button {
+  height: 60px;
+  min-width: 200px;
+  margin: auto;
+}
+
+.no-data-row {
+  text-align: center;
+}
+
+.no-data-cell {
+  text-align: center;
+  font-style: italic;
+  color: gray;
+  padding: 16px;
+}
+
+
+::ng-deep .form-field input {
+  background-color: #fff !important; 
+
+}
+
+::ng-deep .form-field input.editable {
+  background-color: #ffffff !important; 
+  cursor: text !important; 
+}
+
+::ng-deep .form-field input.editable:hover {
+  background-color: #ffffff !important; 
+  cursor: text !important; 
+}
+
+::ng-deep .mat-mdc-form-field-flex {
+  background-color: white !important; 
+}
+::ng-deep .mat-mdc-form-field-flex:hover {
+  background-color: #fff !important; 
+}
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: #fff !important; 
+}
+
+::ng-deep .mdc-text-field--filled.mdc-text-field--disabled {
+  background-color:  white !important;
+}
+
+
+::ng-deep .mdc-text-field--filled.mdc-text-field--disabled:hover {
+  background-color:  white !important;
+}
+
+::ng-deep .form-field input.editable {
+  background-color: white !important; 
+}
+
+
+
+::ng-deep .mat-mdc-form-field-infix {
+  background-color: #ffffff !important; 
+}
+
+::ng-deep .mat-mdc-form-field-infix:hover {
+  background-color: #fff !important; 
+}
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled):hover {
+  background-color: #fff !important; 
+}
+
+::ng-deep .mat-mdc-form-field-focus-overlay {
+  background-color: transparent !important; 
+}
+
+::ng-deep .mat-mdc-form-field-focus-overlay:hover {
+  background-color: transparent!important; 
+}

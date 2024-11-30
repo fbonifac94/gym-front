@@ -1,0 +1,56 @@
+<div class="clientes-container">
+    <h2>Rutinas</h2>
+  
+    <div class="actions">
+      <button mat-raised-button color="primary" class="add-routine-button" *ngIf="isTeacher" (click)="createRoutine()">
+        Agregar rutina
+      </button>
+    </div>
+
+    <div class="loading-overlay" *ngIf="dataSource.isLoading$ | async">
+      <mat-spinner></mat-spinner>
+    </div>
+  
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 custom-table" [class.table-loading]="dataSource.isLoading$| async" matSortActive="title" matSortDirection="asc" matSortDisableClear>
+      
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Titulo</th>
+        <td mat-cell *matCellDef="let routine">{{ routine.title }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="creationDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fehca creación</th>
+        <td mat-cell *matCellDef="let routine">{{ routine.creationDate | date : 'dd/MM/yyyy'}}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="modificationDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha modificación</th>
+        <td mat-cell *matCellDef="let routine">{{ routine.modificationDate | date : 'dd/MM/yyyy'}}</td>
+      </ng-container>
+    
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let routine">
+          <button mat-icon-button color="warn" (click)="deleteRoutine(routine)" title="Eliminar" *ngIf="isTeacher">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button (click)="modifyRoutine(routine)" title="Modificar" *ngIf="isTeacher">
+            <mat-icon color="primary">edit</mat-icon>
+          </button>
+          <button mat-icon-button color="accent" (click)="seeRoutine(routine)" title="Detalle">
+            <mat-icon>search</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr class="no-data-row" *matNoDataRow>
+        <td colspan="5" class="no-data-cell">No se encontraron rutinas.</td>
+      </tr>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  
+    <mat-paginator [length]="dataSource.totalElements" [pageSize]="10" showFirstLastButtons></mat-paginator>
+  </div>
+  

@@ -1,0 +1,93 @@
+.exercise-management-container {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    button {
+      font-size: 14px;
+    }
+  }
+
+  mat-accordion {
+    width: 100%;
+
+    mat-expansion-panel {
+      margin-bottom: 10px;
+
+      mat-expansion-panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .exercise-type-title {
+          font-weight: bold;
+          font-size: 18px;
+          color: #555;
+        }
+
+        button {
+          margin-left: auto;
+        }
+      }
+    }
+    table {
+      box-shadow: none;
+    }
+
+    .routine-table {
+      width: 100%;
+      table-layout: auto;
+
+      th {
+        text-align: left;
+        padding: 8px;
+        font-size: 14px;
+        background-color: #e0e0e0;
+      }
+
+      td {
+        padding: 8px;
+        font-size: 14px;
+        text-align: left;
+
+        button {
+          margin: 0;
+        }
+      }
+
+      .mat-header-cell,
+      .mat-cell {
+        border-bottom: 1px solid #ddd;
+      }
+    }
+  }
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-add {
+  height: 60px;
+  min-width: 200px;
+}

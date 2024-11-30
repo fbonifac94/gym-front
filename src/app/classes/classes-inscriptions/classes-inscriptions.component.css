@@ -1,0 +1,26 @@
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+  }
+  
+  .secondary {
+    font-size: 0.85rem;
+    color: gray;
+  }
+  
+  mat-list-item {
+    margin-bottom: 8px;
+  }
+  .btnWidth {
+    height: 60px;
+    width: 200px;
+  }
+  .inscriptos {
+    font-size: 12px;
+  position: relative;
+  font-style: italic;
+  margin-bottom: 10px;
+  display: block;
+  }

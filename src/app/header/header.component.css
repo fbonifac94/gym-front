@@ -1,0 +1,57 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 90px;
+  box-shadow: 10px 9px 27px -7px rgba(154, 154, 154, 0.63);
+  -webkit-box-shadow: 10px 9px 27px -7px rgba(154, 154, 154, 0.63);
+  -moz-box-shadow: 10px 9px 27px -7px rgba(154, 154, 154, 0.63);
+}
+
+.logo img {
+  cursor: pointer;
+  height: 50px;
+  margin-right: 1rem;
+}
+
+.title {
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.initsesionclassbutton {
+  height: 60px;
+  background-color: #e7e7f7;
+  width: 200px;
+  font-size: 14px;
+}
+
+.spanbienvenido {
+  margin-right: 20px;
+  top: -10px;
+  position: relative;
+  color: #537884;
+  font-style: italic;
+}
+
+::ng-deep .mat-menu-panel {
+  overflow-x: hidden !important;
+}
+.customer {
+  font-size: 10px;
+  position: absolute;
+  right: 84px;
+  top: 54px;
+  font-style: italic;
+  color: rgb(184, 1, 1);
+}
+.logoclick {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}

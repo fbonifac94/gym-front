@@ -1,0 +1,42 @@
+<div class="exercise-management-container">
+    <h2>Gestión de Ejercicios</h2>
+  
+    <div class="action-buttons">
+      <button mat-raised-button class="button-add" color="primary" (click)="onAddExerciseType()">Agregar Tipo de Ejercicio</button>
+      <button mat-raised-button class="button-add" color="primary" (click)="onAddExercise()">Agregar Ejercicio</button>
+    </div>
+  
+    <div class="loading-overlay" *ngIf="isLoading">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let exerciseByExerciseType of exercisesGroupedByExerciseType$ | async">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="exercise-type-title">
+            {{ exerciseByExerciseType.exerciseType.name }}
+          </mat-panel-title>
+          <button mat-icon-button color="warn" (click)="onDeleteExerciseType(exerciseByExerciseType.exerciseType)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-expansion-panel-header>
+  
+        <table mat-table [dataSource]="exerciseByExerciseType.exercises" class="routine-table mat-elevation-z8">
+          <ng-container matColumnDef="name">
+            <td mat-cell *matCellDef="let exercise">{{ exercise.name }}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="actions">
+            <td style="text-align: right;" mat-cell *matCellDef="let exercise">
+              <button mat-icon-button color="warn" (click)="onDeleteExercise(exercise)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-row *matRowDef="let row; columns: ['name', 'actions'];"></tr>
+        </table>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <div style="display: block; height: 250px;"></div>
+  </div>
+  

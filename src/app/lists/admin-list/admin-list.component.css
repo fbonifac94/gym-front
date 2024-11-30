@@ -1,0 +1,112 @@
+.green-icon-button {
+  color: rgb(13, 175, 13);
+}
+
+.clientes-container {
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  height: auto;
+  display: block;
+}
+
+.clientes-container h2 {
+  color: #333;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+button[mat-raised-button] {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.custom-table {
+  width: 100%;
+  overflow: auto;
+  margin-top: 1rem;
+}
+
+.custom-table th.mat-header-cell {
+  font-weight: bold;
+  color: #444;
+  background-color: #f1f1f1;
+  text-align: left;
+}
+
+.custom-table td.mat-cell {
+  padding: 0.75rem;
+  color: #555;
+}
+
+.custom-table tr.mat-header-row {
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.custom-table tr.mat-row:hover {
+  background-color: #f5f5f5;
+}
+
+.mat-paginator {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  border-top: 1px solid #ddd;
+  padding-top: 0.5rem;
+}
+
+button[mat-icon-button] {
+  margin: 0 0.25rem;
+}
+
+.mat-icon {
+  font-size: 1.5rem;
+}
+
+button[mat-icon-button][color="warn"] .mat-icon {
+  color: #e53935;
+}
+
+button[mat-icon-button][color="accent"] .mat-icon {
+  color: #1e88e5;
+}
+
+.table-loading {
+  opacity: 0.3;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-data-row {
+  text-align: center;
+}
+
+.no-data-cell {
+  text-align: center;
+  font-style: italic;
+  color: gray;
+  padding: 16px;
+}
+
+.add-admin-button {
+  height: 60px;
+  min-width: 200px;
+}

@@ -1,0 +1,77 @@
+<div class="clientes-container">
+    <h2>Clases</h2>
+  
+    <div class="actions">
+      <button mat-raised-button class="button-add" color="primary" (click)="addClass()">
+        Agregar clase
+      </button>
+    </div>
+
+    <div class="loading-overlay" *ngIf="dataSource.isLoading$ | async">
+      <mat-spinner></mat-spinner>
+    </div>
+  
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 custom-table" [class.table-loading]="dataSource.isLoading$| async" matSortActive="name" matSortDirection="asc" matSortDisableClear>
+      
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Clase</th>
+        <td mat-cell *matCellDef="let clasz">{{ clasz.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="day">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Día</th>
+        <td mat-cell *matCellDef="let clasz">{{ clasz.day.name | titlecase }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="initSchedule">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Horario de inicio</th>
+        <td mat-cell *matCellDef="let clasz">{{ clasz.initSchedule.time | date: 'HH:mm' }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="endSchedule">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Horario de fin</th>
+        <td mat-cell *matCellDef="let clasz">{{ clasz.endSchedule.time | date: 'HH:mm' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="teacher">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Profesor</th>
+        <td mat-cell *matCellDef="let clasz">{{ (clasz.teacher.user.person.lastName | titlecase) + ' ' +  (clasz.teacher.user.person.firstName | titlecase) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Cupo total</th>
+        <td mat-cell *matCellDef="let clasz">{{ clasz.classPersonsAmount }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+        <td mat-cell *matCellDef="let clasz">{{ clasz.status | status }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let clasz">
+          <button mat-icon-button (click)="enableClasz(clasz)" *ngIf="canEnableClasz(clasz)"  title="Habilitar">
+            <mat-icon color="primary">check_circle</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="disableClasz(clasz)" *ngIf="canDisableClasz(clasz)"  title="Deshabilitar">
+            <mat-icon>cancel</mat-icon>
+          </button>
+          <button mat-icon-button (click)="detail(clasz)" title="Editar clase">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr class="no-data-row" *matNoDataRow>
+        <td colspan="7" class="no-data-cell">No se encontraron clases.</td>
+      </tr>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  
+    <mat-paginator [length]="dataSource.totalElements" [pageSize]="10" showFirstLastButtons></mat-paginator>
+    <div style="height: 250px; display: block"></div>
+  </div>
+  

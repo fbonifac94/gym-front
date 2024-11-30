@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Clientes Inscritos en {{ className }}</h2>
+
+<mat-dialog-content>
+  <div *ngIf="isLoading" class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <mat-list *ngIf="!isLoading && haveContent(customers$ | async); else noClients">
+    <mat-list-item *ngFor="let customer of customers$ | async">
+      <span *ngIf="getAmountOfPersonsInscripted(customers$ | async) > 0" class="inscriptos">Cantidad de personas inscriptas: {{ getAmountOfPersonsInscripted(customers$ | async) }}</span>
+      <div style="display: flex;" mat-line><mat-icon style="margin-right: 5px;">person</mat-icon> {{ customer.user.person.firstName | titlecase }} {{ customer.user.person.lastName | titlecase }}</div>
+    </mat-list-item>
+  </mat-list>
+
+  <ng-template #noClients>
+    <p *ngIf="!isLoading">No hay clientes inscritos en esta clase.</p>
+  </ng-template>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button class="btnWidth" mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>
